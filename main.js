@@ -6,6 +6,8 @@ const prefix = 'c!';
 
 const fs = require('fs');
 
+const version = '0.8.4.3';
+
 const memberCounter = require('./counters/member-counter');
 
 client.commands = new Discord.Collection();
@@ -21,6 +23,7 @@ for (const file of commandFiles) {
 
 client.on('ready', msg => {
     console.log(`${client.user.username} Is online!`);
+    console.log(`Bot is running version: ${version}`);
 
     memberCounter(client);
 
