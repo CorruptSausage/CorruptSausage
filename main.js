@@ -1,6 +1,16 @@
 const Discord = require('discord.js');
 
-const client = new Discord.Client();
+const client = new Discord.Client({partials: ["MESSAGE", "USER", "REACTION"]});
+
+
+const enmap = require('enmap');
+
+const settings = new enmap({
+    name: "settings",
+    autoFetch: true,
+    cloneLevel: "deep",
+    fetchAll: true
+})
 
 const prefix = 'c!';
 
@@ -223,7 +233,70 @@ client.on('message', async message => {
         } else {
             message.reply("You don't have access to this command.");
         }
+
+
+
+        //Ticket System
+    }else if(command === 'ticket-setup'){
+        if(message.member.permissions.has('ADMINISTRATOR')){
+            let channel = message.mentions.channels.first();
+
+            if(!channel){
+                message.reply('Usage: [Channel]');
+            }
+
+
+            let sent = await channel.send(new Discord.MessageEmbed()
+            .setTitle('Ticket System')
+            .setDescription("React to open a ticket")
+            .setFooter('CorruptSausage™')
+            .setcolor('#FF0000')
+            )
+
+            settings.set(`${message.guild.id}-ticket`, sent.id);
+
+            message.channel.send('Ticket setup done.')
+            sent.react('🎫');
+
+        }else{
+            message.reply("You don't have access to this command.");
+        }
+    }else if(command === 'close'){
+        if(!message.channel.name.includes("ticket-")) return message.reply('You cannot use that here.')
+        message.channel.delete();
     }
+
+    
+    client.on('messageReactionAdd', async (reaction, users) => {
+        if(user.partial) await user.fetch();
+        if(reaction.partial) await reaction.fetch();
+        if(reaction.message.partial) await reaction.message.fetch();
+
+        if(user.bot) return;
+
+        let ticketid = await settings.get(`${reaction.message.guild.id}-ticket`);
+
+        if(!ticketid) return;
+
+        if(reaction.message.id == ticketid && reaction.emoji.name == '🎫') {
+            reaction.users.remove(user);
+
+            reaction.message.guild.channels.create(`Ticket-${user.username}`, {
+                permissionOverwrites: [{
+                    id: user.id,
+                    allow: ["SEND_MESSAGES", "VIEW_CHANNEL"]
+                },
+            {
+                id: reaction.message.guild.roles.everyone,
+                deny: ["VIEW_CHANNEL"]
+            }
+        ],
+        type: "text"
+            }).then(async channel => {
+                channel.send(`<@${user.id}>`, new Discord.MessageEmbed().setTitle("Welcome to your ticket").setDescription("Please wait.").setColor('00ff00'))
+            })
+        }
+    });
 
 
 
