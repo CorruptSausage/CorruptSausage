@@ -35,7 +35,7 @@ client.on('ready', msg => {
                 readCommands(path.join(dir, file))
             }else if(file !== baseFile){
                 const option = require(path.join(__dirname, dir, file))
-                console.log(file, option)
+                commandBase(client, option)
             }
 
             
