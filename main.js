@@ -1,3 +1,5 @@
+const path = require('path');
+
 const Discord = require('discord.js');
 
 const client = new Discord.Client();
@@ -21,6 +23,25 @@ for (const file of commandFiles) {
 
 client.on('ready', msg => {
     console.log(`${client.user.username} Is online!`);
+
+    const baseFile = 'command-base.js'
+    const commandBase = require(`./commands/${baseFile}`)
+
+    const readCommands = dir =>{
+        const files = fs.readdirSync(path.join(__dirname, dir))
+        for(const file of files){
+            const stat = fs.lstatSync(path.join(__dirname, dir, file))
+            if(stat.isDirectory()){
+                readCommands(path.join(dir, file))
+            }else if(file !== baseFile){
+                const option = require(path.join(__dirname, dir, file))
+                console.log(file, option)
+            }
+
+            
+        }
+    }
+    readCommands('commands')
 
     memberCounter(client);
 
