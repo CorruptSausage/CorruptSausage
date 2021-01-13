@@ -215,4 +215,4 @@ client.on('message', async message => {
 
 
 
-client.login('Nzk3MTcxODY4OTg4ODY2NTgw.X_imKA.XjSkhGDR7kpEZ9Wl8ml7Gv6tH9I');
+client.login(process.env.token);
