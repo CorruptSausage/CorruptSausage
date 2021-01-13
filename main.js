@@ -40,7 +40,12 @@ client.on('ready', msg => {
     client.channels.cache.find(ch => ch.name === 'bot-status').send(startembed);
 
 
-    client.user.setPresence({ game: { name: 'CorruptSausage' }, status: 'dnd' });
+    client.user.setPresence({
+        game: {
+            name: 'CorruptSausage'
+        },
+        status: 'dnd'
+    });
     client.user.setActivity('CorruptSausage', 'Bruh');
 
 
@@ -62,11 +67,11 @@ client.on('guildMemberAdd', member => {
     const role = member.guild.roles.cache.find(role => role.name === 'Community');
 
     const welcomeEmbed = new Discord.MessageEmbed()
-    .setTitle('New Member!')
-    .setColor('#097FF00')
-    .setDescription(`${member} Just joined the server!`)
-    .setTimestamp()
-    .setThumbnail(member.user.avatarURL())
+        .setTitle('New Member!')
+        .setColor('#097FF00')
+        .setDescription(`${member} Just joined the server!`)
+        .setTimestamp()
+        .setThumbnail(member.user.avatarURL())
 
     if (!channel) return;
 
@@ -78,11 +83,11 @@ client.on('guildMemberRemove', member => {
     const channel = member.guild.channels.cache.find(ch => ch.name === 'member-log');
 
     const leaveEmbed = new Discord.MessageEmbed()
-    .setTitle('Member left!')
-    .setColor('#0FF0000')
-    .setDescription(`${member} Just left the server!`)
-    .setTimestamp()
-    .setThumbnail(member.user.avatarURL())
+        .setTitle('Member left!')
+        .setColor('#0FF0000')
+        .setDescription(`${member} Just left the server!`)
+        .setTimestamp()
+        .setThumbnail(member.user.avatarURL())
 
     if (!channel) return;
 
@@ -209,6 +214,12 @@ client.on('message', async message => {
         if (message.member.permissions.has('MANAGE_ROLES')) {
             message.delete();
             client.commands.get('removerole').execute(message, args);
+        } else {
+            message.reply("You don't have access to this command.");
+        }
+    } else if (command === 'reload') {
+        if (message.author.id === '306113920341377024') {
+            client.commands.get('reload').execute(message, args);
         } else {
             message.reply("You don't have access to this command.");
         }
