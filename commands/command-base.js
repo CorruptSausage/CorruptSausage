@@ -7,7 +7,7 @@
 
 const {
     prefix
-} = require('../config.json')
+} = require('../main.js')
 
 const validatePermissions = (permissions) => {
     const validPermissions = [
