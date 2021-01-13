@@ -30,6 +30,7 @@ client.on('ready', msg => {
     const startembed = new Discord.MessageEmbed()
         .setTitle('Bot is online!')
         .setDescription('Bot is currently online and responding to commands.')
+        .addField('Bot is running version:', version)
         .setColor('#0FF0000')
         .setTimestamp()
         .setThumbnail(client.user.avatarURL())
@@ -62,7 +63,7 @@ client.on('guildMemberAdd', member => {
 
     const welcomeEmbed = new Discord.MessageEmbed()
     .setTitle('New Member!')
-    .setColor('#0FF0000')
+    .setColor('#097FF00')
     .setDescription(`${member} Just joined the server!`)
     .setTimestamp()
     .setThumbnail(member.user.avatarURL())

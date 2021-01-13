@@ -19,7 +19,7 @@ module.exports = {
             const embed = new MessageEmbed()
                 .setTitle(`Role Added: ${roleName.name}`)
                 .setDescription(`${message.author} has successfully given the role ${roleName} to ${member.user}`)
-                .setColor('#008000')
+                .setColor('#097FF00')
                 .setThumbnail(member.user.displayAvatarURL({ dynamic: true }))
                 .setFooter(new Date().toLocaleString())
 
