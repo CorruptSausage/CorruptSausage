@@ -18,7 +18,6 @@ module.exports = {
             .setTitle('Bot Status:')
             .setColor('#FF0000')
             .addField('Bot Status:', 'Online and responding to commands.')
-            .addField('Bot Version:', version)
             .setFooter('CorruptSausage™')
 
             message.channel.send(statusEmbed);
